@@ -45,8 +45,9 @@ public sealed class Look
 
 public static class Puppet
 {
-    public const int Frame = 64;
-    public const int OriginX = 32, OriginY = 60;
+    // Кадр с запасом под оружие: вперёд ~60 px, назад ~30 px, вверх ~75 px от ступней.
+    public const int FrameW = 96, FrameH = 80;
+    public const int OriginX = 32, OriginY = 76;
 
     private const float Thigh = 11, Shin = 11, Torso = 15, Upper = 8, Fore = 8, HeadR = 5;
 
@@ -60,9 +61,9 @@ public static class Puppet
 
     public static Canvas Render(Pose p, Look look)
     {
-        const int size = 128;
+        const int size = 192;
         var c = new Canvas(size, size);
-        var hip = (X: 64f, Y: 64f);
+        var hip = (X: 96f, Y: 96f);
 
         var up = (X: MathF.Sin(p.Lean * MathF.PI / 180), Y: -MathF.Cos(p.Lean * MathF.PI / 180));
         var fwd = (X: -up.Y, Y: up.X); // «вперёд» для головы, поворачивается вместе с корпусом
@@ -79,6 +80,19 @@ public static class Puppet
         var fHand = Add(fElbow, Dir(p.FrontFore), Fore);
         var bElbow = Add(shoulder, Dir(p.BackUpper), Upper);
         var bHand = Add(bElbow, Dir(p.BackFore), Fore);
+
+        // Геометрия для подбора боксов (в координатах холста, переводится в координаты от ступней в Place).
+        var wd = Dir(p.Weapon);
+        var (wA, wB) = look.Weapon == WeaponKind.SwordAndShield
+            ? (Add(fHand, wd, -3), Add(fHand, wd, 19))
+            : (Add(fHand, wd, -10), Add(fHand, wd, 21));
+        _pending = new RawMetrics(
+            Body: Bounds(new[] { hip, neck, fKnee, fFoot, bKnee, bFoot, Add(head, up, HeadR), Add(head, fwd, HeadR), Add(head, fwd, -HeadR) }, 2.5f),
+            Weapon: Bounds(new[] { wA, wB }, 1.5f),
+            FrontArm: Bounds(new[] { shoulder, fElbow, fHand }, 1.5f),
+            Shield: look.Weapon == WeaponKind.SwordAndShield ? Bounds(new[] { bHand }, 6.5f) : null,
+            FrontLeg: Bounds(new[] { hip, fKnee, fFoot }, 2.5f),
+            Hip: hip);
 
         var dark = 0.72f;
 
@@ -242,12 +256,40 @@ public static class Puppet
     /// <summary>Сдвигает фигуру в кадр 64x64: самая нижняя точка — на линию пола, таз — по центру.</summary>
     private static Canvas Place(Canvas src, (float X, float Y) hip, Pose p)
     {
-        var frame = new Canvas(Frame, Frame);
+        var frame = new Canvas(FrameW, FrameH);
         var b = src.Bounds();
         if (b is not { } bounds) return frame;
         int dx = OriginX + (int)MathF.Round(p.OffsetX) - (int)hip.X;
         int dy = OriginY + 1 - bounds.MaxY - 1;
         frame.Blit(src, dx, dy, p.Alpha);
+
+        // Координаты относительно точки origin (ступни): x — вперёд, y — вниз.
+        Box? Rel(Box? r) => r is { } v ? new Box(v.X0 + dx - OriginX, v.Y0 + dy - OriginY, v.X1 + dx - OriginX, v.Y1 + dy - OriginY) : null;
+        var m = _pending!;
+        Last = new Metrics(Rel(m.Body)!.Value, Rel(m.Weapon)!.Value, Rel(m.FrontArm)!.Value, Rel(m.Shield), Rel(m.FrontLeg)!.Value);
         return frame;
+    }
+
+    // ───────────── замеры для боксов ─────────────
+
+    public readonly record struct Box(float X0, float Y0, float X1, float Y1)
+    {
+        public override string ToString() =>
+            $"x {MathF.Round(X0),4:0}..{MathF.Round(X1),-4:0} y {MathF.Round(Y0),4:0}..{MathF.Round(Y1),-4:0}";
+    }
+
+    public sealed record Metrics(Box Body, Box Weapon, Box FrontArm, Box? Shield, Box FrontLeg);
+
+    private sealed record RawMetrics(Box Body, Box Weapon, Box FrontArm, Box? Shield, Box FrontLeg, (float X, float Y) Hip);
+
+    private static RawMetrics? _pending;
+
+    /// <summary>Замеры последнего отрисованного кадра.</summary>
+    public static Metrics? Last { get; private set; }
+
+    private static Box Bounds(IEnumerable<(float X, float Y)> pts, float pad)
+    {
+        var list = pts.ToList();
+        return new Box(list.Min(q => q.X) - pad, list.Min(q => q.Y) - pad, list.Max(q => q.X) + pad, list.Max(q => q.Y) + pad);
     }
 }

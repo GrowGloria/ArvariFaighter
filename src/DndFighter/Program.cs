@@ -15,5 +15,8 @@ if (shot >= 0 && shot + 1 < args.Length)
     int ticks = Array.IndexOf(args, "--ticks");
     if (ticks >= 0 && ticks + 1 < args.Length) game.ScreenshotTick = int.Parse(args[ticks + 1]);
 }
+// Отладка: DndFighter.exe --boxsheet папка — листы с боксами всех приёмов.
+int boxes = Array.IndexOf(args, "--boxsheet");
+if (boxes >= 0 && boxes + 1 < args.Length) game.BoxSheetDir = args[boxes + 1];
 game.Run();
 return 0;

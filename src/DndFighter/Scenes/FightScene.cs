@@ -258,7 +258,8 @@ public sealed class FightScene : Scene
     private void OnMoveStarted(Fighter f, MoveDef m)
     {
         if (f.Index != 0) return;
-        _lastMoveInfo = $"{m.Name} ({m.Input})  СТАРТ {m.Startup}  АКТИВ {m.Active}  ВОССТ {m.Recovery}";
+        string cost = string.Concat(m.Cost.Select(c => $"  ЦЕНА {c.Value:0.#}"));
+        _lastMoveInfo = $"{m.Name} ({m.Input})  СТАРТ {m.Startup}  АКТИВ {m.Active}  ВОССТ {m.Recovery}{cost}";
     }
 
     private void OnHit(HitReport r)

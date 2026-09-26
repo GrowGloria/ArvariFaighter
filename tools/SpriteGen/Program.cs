@@ -35,14 +35,23 @@ Console.WriteLine("Готово.");
 void BuildSheet(Look look, bool mage, string path)
 {
     const int cols = 8;
-    var sheet = new Canvas(cols * Puppet.Frame, rows.Length * Puppet.Frame);
+    var metrics = new List<string>();
+    var sheet = new Canvas(cols * Puppet.FrameW, rows.Length * Puppet.FrameH);
     for (int r = 0; r < rows.Length; r++)
     {
         var poses = Poses.Build(rows[r], mage);
         if (poses.Length > cols) throw new InvalidOperationException($"{rows[r]}: больше {cols} кадров");
         for (int f = 0; f < poses.Length; f++)
-            sheet.Blit(Puppet.Render(poses[f], look), f * Puppet.Frame, r * Puppet.Frame);
+        {
+            sheet.Blit(Puppet.Render(poses[f], look), f * Puppet.FrameW, r * Puppet.FrameH);
+            var m = Puppet.Last!;
+            metrics.Add($"{rows[r],-12} f{f}  тело {m.Body}  оружие {m.Weapon}  рука {m.FrontArm}  нога {m.FrontLeg}"
+                        + (m.Shield is { } s ? $"  щит {s}" : ""));
+        }
     }
+    // Замеры частей тела по кадрам — по ним подбираются хёртбоксы и хитбоксы в JSON.
+    File.WriteAllLines(Path.Combine(Path.GetDirectoryName(path)!, "..", "..", "..", "..", "..", "tools", "SpriteGen",
+        $"metrics_{Path.GetFileName(Path.GetDirectoryName(path))}.txt"), metrics);
     sheet.SavePng(path);
     Console.WriteLine($"  {path}");
 
@@ -53,12 +62,12 @@ void BuildSheet(Look look, bool mage, string path)
         var name = Path.GetFileName(Path.GetDirectoryName(path)!);
         foreach (var (from, to, part) in new[] { (0, 11, "a"), (11, rows.Length, "b") })
         {
-            var big = new Canvas(5 * 64 * s, (to - from) * 64 * s);
+            var big = new Canvas(5 * Puppet.FrameW * s, (to - from) * Puppet.FrameH * s);
             for (int y = 0; y < big.H; y++)
                 for (int x = 0; x < big.W; x++)
                 {
-                    var c = sheet.Get(x / s, from * 64 + y / s);
-                    bool grid = x % (64 * s) == 0 || y % (64 * s) == 0;
+                    var c = sheet.Get(x / s, from * Puppet.FrameH + y / s);
+                    bool grid = x % (Puppet.FrameW * s) == 0 || y % (Puppet.FrameH * s) == 0;
                     big.Px[y * big.W + x] = c.A != 0 ? c : grid ? new Rgba(120, 120, 140) : new Rgba(70, 70, 90);
                 }
             big.SavePng(Path.Combine(args[1], $"{name}_{part}.png"));

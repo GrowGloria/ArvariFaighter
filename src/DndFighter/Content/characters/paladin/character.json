@@ -16,14 +16,14 @@
   // Ячейки копятся в бою: за попадания, за блок и за полученный урон.
   "resources": [
     {
-      "id": "slots", "name": "ЯЧЕЙКИ", "max": 2, "start": 1,
+      "id": "slots", "name": "ЯЧЕЙКИ ЗАКЛИНАНИЙ", "max": 2, "start": 1,
       "regenPerSecond": 0.03, "gainOnHit": 0.08, "gainOnBlocked": 0.03, "gainOnDamaged": 0.05,
       "display": "pips", "color": "#ffd24a"
     }
   ],
 
   "sheets": {
-    "body": { "file": "sprites.png", "frameWidth": 64, "frameHeight": 64, "originX": 32, "originY": 60 }
+    "body": { "file": "sprites.png", "frameWidth": 96, "frameHeight": 80, "originX": 32, "originY": 76 }
   },
 
   "animations": {
@@ -56,10 +56,12 @@
     "uprising":     { "row": 24, "frames": 5, "hitFrame": 2 }
   },
 
+  // Хёртбоксы по замерам спрайтов (tools/SpriteGen/metrics_paladin.txt):
+  // голова+корпус, ноги; щит выставлен вперёд и тоже уязвим.
   "hurtboxes": {
-    "stand":  [ { "x": -7, "y": -51, "w": 16, "h": 22 }, { "x": -9, "y": -30, "w": 20, "h": 30 } ],
-    "crouch": [ { "x": -9, "y": -38, "w": 22, "h": 38 } ],
-    "air":    [ { "x": -9, "y": -46, "w": 18, "h": 42 } ]
+    "stand":  [ { "x": -6, "y": -50, "w": 15, "h": 22 }, { "x": -8, "y": -28, "w": 18, "h": 28 }, { "x": 8, "y": -33, "w": 8, "h": 12 } ],
+    "crouch": [ { "x": -8, "y": -41, "w": 21, "h": 41 }, { "x": 12, "y": -25, "w": 7, "h": 12 } ],
+    "air":    [ { "x": -8, "y": -48, "w": 19, "h": 46 } ]
   },
-  "pushbox": { "x": -9, "y": -46, "w": 18, "h": 46 }
+  "pushbox": { "x": -8, "y": -44, "w": 17, "h": 44 }
 }

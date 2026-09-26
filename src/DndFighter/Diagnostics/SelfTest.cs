@@ -186,6 +186,17 @@ public static class SelfTest
         }
         {
             var (w, a, b, s1, _) = Make(pal, wiz, stage, 200);
+            a.Resources["slots"] = 0;
+            s1.Add(2, n: 2).Add(3, n: 2).Add(6, Buttons.H);
+            string? started = null;
+            w.MoveStarted += (f, m) => { if (f == a) started = m.Id; };
+            Run(w, 10);
+            Check("Без ячеек кара не выходит, игрок видит подсказку",
+                started != "smite" && w.Popups.Any(p => p.Text.StartsWith("НЕ ХВАТАЕТ")),
+                $"move={started ?? "нет"} popups={string.Join(",", w.Popups.Select(p => p.Text))}");
+        }
+        {
+            var (w, a, b, s1, _) = Make(pal, wiz, stage, 200);
             a.Health = 500;
             s1.Add(2, n: 2).Add(1, n: 2).Add(4, Buttons.M);
             Run(w, 60);
@@ -232,6 +243,38 @@ public static class SelfTest
             Run(w, 90);
             Check("j.236L: огонь с высоты летит вниз-вперёд и попадает", started == "air_fire_bolt" && rep != null,
                 $"move={started ?? "нет"} hit={rep != null}");
+        }
+        // Дальние приёмы Элары, когда она второй игрок и стоит СПРАВА (вперёд = влево).
+        foreach (var (name, motion, button, expectId) in new[]
+        {
+            ("огненный снаряд", "236", Buttons.L, "fire_bolt"),
+            ("луч холода", "236", Buttons.M, "ray_of_frost"),
+            ("волшебная стрела", "236", Buttons.H, "magic_missile"),
+            ("облако кинжалов", "214", Buttons.H, "cloud_of_daggers"),
+        })
+        {
+            var (w, a, b, _, s2) = Make(pal, wiz, stage, 140);
+            foreach (var ch in motion[..^1]) s2.Add(ch - '0', n: 2);
+            s2.Add(motion[^1] - '0', button);
+            string? started = null;
+            int hits = 0;
+            w.MoveStarted += (f, m) => { if (f == b) started = m.Id; };
+            w.HitResolved += r => { if (r.Attacker == b) hits++; };
+            Run(w, 150);
+            Check($"Элара справа: {name} ({motion}+{button}) выходит и попадает по Торину",
+                started == expectId && hits > 0 && a.Health < pal.Stats.Health,
+                $"move={started ?? "нет"} hits={hits} hp={a.Health}");
+        }
+        {
+            var (w, a, b, _, s2) = Make(pal, wiz, stage, 120);
+            s2.Add(9).Wait(10).Add(2).Add(3).Add(6, Buttons.L);
+            string? started = null;
+            int hits = 0;
+            w.MoveStarted += (f, m) => { if (f == b) started = m.Id; };
+            w.HitResolved += r => { if (r.Attacker == b) hits++; };
+            Run(w, 100);
+            Check("Элара справа: огонь с высоты из прыжка", started == "air_fire_bolt" && hits > 0,
+                $"move={started ?? "нет"} hits={hits}");
         }
         {
             var (w, a, b, s1, _) = Make(wiz, pal, stage, 120);

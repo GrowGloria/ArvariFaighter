@@ -98,8 +98,19 @@ public sealed class FighterGame : Game
         base.Update(gameTime);
     }
 
+    /// <summary>Отладка: папка для листов боксов (--boxsheet).</summary>
+    public string? BoxSheetDir { get; set; }
+
     protected override void Draw(GameTime gameTime)
     {
+        if (BoxSheetDir != null)
+        {
+            Diagnostics.BoxSheet.Save(GraphicsDevice, _batch, _draw, Loader, BoxSheetDir);
+            BoxSheetDir = null;
+            Exit();
+            return;
+        }
+
         GraphicsDevice.SetRenderTarget(_screen);
         GraphicsDevice.Clear(Color.Black);
         _batch.Begin(samplerState: SamplerState.PointClamp);
