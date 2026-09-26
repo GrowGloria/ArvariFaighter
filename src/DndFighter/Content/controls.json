@@ -1,0 +1,7 @@
+{
+  // Раскладка клавиш. Имена — из перечисления Microsoft.Xna.Framework.Input.Keys
+  // (A–Z, D0–D9, NumPad0–NumPad9, Up/Down/Left/Right, LeftShift, Space, OemComma…).
+  // L / M / H — лёгкая, средняя и тяжёлая атака. Бросок = L + M вместе.
+  "p1": { "up": "W", "down": "S", "left": "A", "right": "D", "l": "J", "m": "K", "h": "L" },
+  "p2": { "up": "Up", "down": "Down", "left": "Left", "right": "Right", "l": "NumPad1", "m": "NumPad2", "h": "NumPad3" }
+}

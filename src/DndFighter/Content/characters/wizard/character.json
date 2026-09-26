@@ -1,0 +1,73 @@
+{
+  "id": "wizard",
+  "name": "Элара",
+  "title": "Волшебница школы воплощения",
+
+  // Дальнобойный персонаж («зонер»): хрупкая, медленно идёт вперёд, быстро отступает,
+  // держит соперника на расстоянии снарядами и длинными ударами посоха.
+  "stats": {
+    "health": 880,
+    "walkSpeed": 1.35,
+    "backWalkSpeed": 1.6,
+    "jumpVelocity": 6.7,
+    "jumpSpeedX": 2.2,
+    "gravity": 0.32
+  },
+
+  // Заговоры (огненный снаряд, луч холода) бесплатны. Ячейки — на сильные заклинания и телепорты.
+  // Плюс уникальная механика из C#: «Магическое восстановление» (см. ArcaneRecoveryBehavior.cs).
+  "resources": [
+    { "id": "slots", "name": "ЯЧЕЙКИ", "max": 3, "start": 3, "regenPerSecond": 0.08, "display": "pips", "color": "#8a9bff" }
+  ],
+  "behavior": "arcane_recovery",
+
+  "sheets": {
+    "body":   { "file": "sprites.png", "frameWidth": 64, "frameHeight": 64, "originX": 32, "originY": 60 },
+    "fx":     { "file": "fx.png",      "frameWidth": 16, "frameHeight": 16, "originX": 8,  "originY": 8 },
+    "fx_big": { "file": "fx_big.png",  "frameWidth": 32, "frameHeight": 32, "originX": 16, "originY": 16 }
+  },
+
+  "animations": {
+    "idle":         { "row": 0, "frames": 4, "frameTime": 10 },
+    "walk":         { "row": 1, "frames": 6, "frameTime": 7 },
+    "crouch":       { "row": 2 },
+    "jump":         { "row": 3, "frames": 3 },
+    "hit":          { "row": 4, "frames": 2, "frameTime": 5, "loop": false },
+    "block":        { "row": 5 },
+    "crouch_block": { "row": 6 },
+    "air_hit":      { "row": 7, "frames": 2, "frameTime": 8 },
+    "knockdown":    { "row": 8, "frames": 2, "frameTime": 6, "loop": false },
+    "getup":        { "row": 9, "frames": 3, "frameTime": 0 },
+    "victory":      { "row": 10, "frames": 2, "frameTime": 20 },
+
+    "5L":    { "row": 11, "frames": 3, "hitFrame": 1 },
+    "5M":    { "row": 12, "frames": 4, "hitFrame": 1 },
+    "5H":    { "row": 13, "frames": 5, "hitFrame": 2 },
+    "2L":    { "row": 14, "frames": 3, "hitFrame": 1 },
+    "2M":    { "row": 15, "frames": 4, "hitFrame": 1 },
+    "2H":    { "row": 16, "frames": 5, "hitFrame": 1 },
+    "jL":    { "row": 17, "frames": 2, "hitFrame": 1 },
+    "jM":    { "row": 18, "frames": 3, "hitFrame": 1 },
+    "jH":    { "row": 19, "frames": 3, "hitFrame": 1 },
+    "throw": { "row": 20, "frames": 4, "hitFrame": 1 },
+
+    "cast_fire":    { "row": 21, "frames": 5, "hitFrame": 2 },
+    "cast_missile": { "row": 22, "frames": 5, "hitFrame": 2 },
+    "misty_step":   { "row": 23, "frames": 5, "hitFrame": 2 },
+    "thunderwave":  { "row": 24, "frames": 5, "hitFrame": 2 },
+    "cast_air":     { "row": 25, "frames": 4, "hitFrame": 1 },
+    "cast_cloud":   { "row": 26, "frames": 5, "hitFrame": 2 },
+
+    "firebolt": { "sheet": "fx", "row": 0, "frames": 4, "frameTime": 4 },
+    "missile":  { "sheet": "fx", "row": 1, "frames": 4, "frameTime": 3 },
+    "frost":    { "sheet": "fx", "row": 2, "frames": 4, "frameTime": 3 },
+    "daggers":  { "sheet": "fx_big", "row": 0, "frames": 4, "frameTime": 5 }
+  },
+
+  "hurtboxes": {
+    "stand":  [ { "x": -7, "y": -52, "w": 16, "h": 22 }, { "x": -9, "y": -30, "w": 19, "h": 30 } ],
+    "crouch": [ { "x": -9, "y": -38, "w": 21, "h": 38 } ],
+    "air":    [ { "x": -9, "y": -46, "w": 18, "h": 42 } ]
+  },
+  "pushbox": { "x": -9, "y": -46, "w": 18, "h": 46 }
+}

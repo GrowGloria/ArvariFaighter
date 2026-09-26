@@ -1,0 +1,186 @@
+[
+  // ───────── Обычные удары: длинный посох, чтобы держать дистанцию ─────────
+  {
+    "id": "5L", "name": "Тычок посохом", "input": "5L",
+    "startup": 5, "active": 3, "recovery": 9,
+    "hitboxes": [ { "x": 8, "y": -40, "w": 28, "h": 10 } ],
+    "hit": { "damage": 25, "hitstun": 12, "blockstun": 8, "hitstop": 6, "pushback": 3 },
+    "cancels": [ "5M", "2M", "special" ]
+  },
+  {
+    "id": "5M", "name": "Дальний взмах", "input": "5M",
+    "startup": 9, "active": 3, "recovery": 15,
+    "hitboxes": [ { "x": 12, "y": -46, "w": 38, "h": 18 } ],
+    "hit": { "damage": 50, "hitstun": 15, "blockstun": 10, "hitstop": 8, "pushback": 4 },
+    "cancels": [ "special" ]
+  },
+  {
+    "id": "5H", "name": "Отталкивающий удар", "input": "5H",
+    "startup": 13, "active": 4, "recovery": 22,
+    "hitboxes": [ { "x": 12, "y": -54, "w": 44, "h": 34 } ],
+    "hit": { "damage": 75, "hitstun": 19, "blockstun": 13, "hitstop": 10, "pushback": 6.5 },
+    "cancels": [ "special" ]
+  },
+  {
+    "id": "2L", "name": "Низкий тычок", "input": "2L",
+    "startup": 5, "active": 2, "recovery": 9,
+    "hitboxes": [ { "x": 6, "y": -28, "w": 28, "h": 10 } ],
+    "hit": { "damage": 22, "hitstun": 12, "blockstun": 8, "hitstop": 6, "pushback": 3, "height": "low" },
+    "cancels": [ "2M", "special" ]
+  },
+  {
+    // Главный «тычок» зонера: самый длинный удар, отменяется в заговор.
+    "id": "2M", "name": "Длинный выпад", "input": "2M",
+    "startup": 9, "active": 3, "recovery": 16,
+    "hitboxes": [ { "x": 12, "y": -26, "w": 46, "h": 10 } ],
+    "hit": { "damage": 45, "hitstun": 15, "blockstun": 10, "hitstop": 8, "pushback": 4 },
+    "cancels": [ "special" ]
+  },
+  {
+    "id": "2H", "name": "Подсечка посохом", "input": "2H",
+    "startup": 12, "active": 3, "recovery": 25,
+    "hitboxes": [ { "x": 8, "y": -12, "w": 44, "h": 12 } ],
+    "hit": { "damage": 70, "hitstun": 20, "blockstun": 12, "hitstop": 9, "pushback": 4, "height": "low", "knockdown": true },
+    "cancels": [ "special" ]
+  },
+
+  // ───────── В прыжке ─────────
+  {
+    "id": "jL", "name": "Удар коленом", "input": "j.L",
+    "startup": 5, "active": 6, "recovery": 6,
+    "hitboxes": [ { "x": 2, "y": -28, "w": 18, "h": 16 } ],
+    "hit": { "damage": 30, "hitstun": 13, "blockstun": 9, "hitstop": 6, "pushback": 2, "height": "overhead" }
+  },
+  {
+    "id": "jM", "name": "Посох сверху", "input": "j.M",
+    "startup": 7, "active": 5, "recovery": 8,
+    "hitboxes": [ { "x": 6, "y": -38, "w": 32, "h": 24 } ],
+    "hit": { "damage": 45, "hitstun": 15, "blockstun": 10, "hitstop": 8, "pushback": 2.5, "height": "overhead" }
+  },
+  {
+    "id": "jH", "name": "Нисходящий посох", "input": "j.H",
+    "startup": 10, "active": 5, "recovery": 10,
+    "hitboxes": [ { "x": 4, "y": -44, "w": 38, "h": 42 } ],
+    "hit": { "damage": 65, "hitstun": 18, "blockstun": 12, "hitstop": 10, "pushback": 3, "height": "overhead" }
+  },
+
+  // ───────── Бросок: отшвыривает далеко — снова дистанция ─────────
+  {
+    "id": "throw", "name": "Отталкивающий импульс", "input": "LM",
+    "startup": 3, "active": 2, "recovery": 22,
+    "throwRange": 36,
+    "hit": { "damage": 80, "hitstop": 10, "launch": { "x": 5.5, "y": -4 } }
+  },
+
+  // ───────── Заговоры (бесплатные, один на экране — общий id "cantrip") ─────────
+  {
+    "id": "fire_bolt", "name": "Огненный снаряд", "input": "236L", "type": "special",
+    "animation": "cast_fire",
+    "startup": 11, "active": 2, "recovery": 22,
+    "effects": [
+      {
+        "type": "projectile", "frame": 11,
+        "id": "cantrip", "animation": "firebolt", "limit": 1,
+        "offsetX": 26, "offsetY": -34, "speedX": 3,
+        "box": { "x": -6, "y": -5, "w": 12, "h": 10 },
+        "hit": { "damage": 60, "chip": 8, "hitstun": 18, "blockstun": 14, "hitstop": 8, "pushback": 3 }
+      }
+    ]
+  },
+  {
+    // Быстрый, но слабее: наказывает попытки подойти.
+    "id": "ray_of_frost", "name": "Луч холода", "input": "236M", "type": "special",
+    "animation": "cast_fire",
+    "startup": 9, "active": 2, "recovery": 24,
+    "effects": [
+      {
+        "type": "projectile", "frame": 9,
+        "id": "cantrip", "animation": "frost", "limit": 1,
+        "offsetX": 26, "offsetY": -36, "speedX": 6.5,
+        "box": { "x": -7, "y": -3, "w": 14, "h": 6 },
+        "hit": { "damage": 45, "chip": 6, "hitstun": 22, "blockstun": 12, "hitstop": 7, "pushback": 2 }
+      }
+    ]
+  },
+  {
+    // Из прыжка вниз-вперёд: против тех, кто подходит низом.
+    "id": "air_fire_bolt", "name": "Огонь с высоты", "input": "j.236L", "type": "special",
+    "animation": "cast_air",
+    "startup": 8, "active": 2, "recovery": 12,
+    "effects": [
+      {
+        "type": "projectile", "frame": 8,
+        "id": "cantrip", "animation": "firebolt", "limit": 1,
+        "offsetX": 18, "offsetY": -24, "speedX": 2.8, "speedY": 2.6,
+        "box": { "x": -6, "y": -5, "w": 12, "h": 10 },
+        "hit": { "damage": 55, "chip": 8, "hitstun": 18, "blockstun": 14, "hitstop": 8, "pushback": 3 }
+      }
+    ]
+  },
+
+  // ───────── Заклинания за ячейки ─────────
+  {
+    // Три быстрых дротика.
+    "id": "magic_missile", "name": "Волшебная стрела", "input": "236H", "type": "special",
+    "animation": "cast_missile",
+    "startup": 12, "active": 5, "recovery": 26,
+    "cost": { "slots": 1 },
+    "effects": [
+      { "type": "projectile", "frame": 12, "id": "missile", "animation": "missile", "offsetX": 24, "offsetY": -38, "speedX": 6, "speedY": -0.3,
+        "box": { "x": -5, "y": -3, "w": 10, "h": 6 },
+        "hit": { "damage": 35, "chip": 10, "hitstun": 14, "blockstun": 10, "hitstop": 4, "pushback": 1.5 } },
+      { "type": "projectile", "frame": 14, "id": "missile", "animation": "missile", "offsetX": 24, "offsetY": -34, "speedX": 6,
+        "box": { "x": -5, "y": -3, "w": 10, "h": 6 },
+        "hit": { "damage": 35, "chip": 10, "hitstun": 14, "blockstun": 10, "hitstop": 4, "pushback": 1.5 } },
+      { "type": "projectile", "frame": 16, "id": "missile", "animation": "missile", "offsetX": 24, "offsetY": -30, "speedX": 6, "speedY": 0.3,
+        "box": { "x": -5, "y": -3, "w": 10, "h": 6 },
+        "hit": { "damage": 35, "chip": 10, "hitstun": 14, "blockstun": 10, "hitstop": 4, "pushback": 1.5 } }
+    ]
+  },
+  {
+    // Висящая ловушка на расстоянии: бьёт несколько раз, перекрывает подход.
+    "id": "cloud_of_daggers", "name": "Облако кинжалов", "input": "214H", "type": "special",
+    "animation": "cast_cloud",
+    "startup": 16, "active": 2, "recovery": 24,
+    "cost": { "slots": 1 },
+    "effects": [
+      {
+        "type": "projectile", "frame": 17,
+        "id": "cloud", "animation": "daggers", "limit": 1,
+        "offsetX": 120, "offsetY": -30, "speedX": 0,
+        "lifetime": 150, "hits": 4, "hitInterval": 24,
+        "box": { "x": -14, "y": -14, "w": 28, "h": 28 },
+        "hit": { "damage": 25, "chip": 5, "hitstun": 18, "blockstun": 12, "hitstop": 4, "pushback": 0.5 }
+      }
+    ]
+  },
+  {
+    // Отступление: телепорт назад, неуязвима.
+    "id": "misty_step_back", "name": "Туманный шаг назад", "input": "214L", "type": "special",
+    "animation": "misty_step",
+    "startup": 6, "active": 1, "recovery": 12,
+    "cost": { "slots": 1 },
+    "effects": [
+      { "type": "invulnerable", "frame": 1, "frames": 16 },
+      { "type": "teleport", "frame": 7, "x": -90 }
+    ]
+  },
+  {
+    "id": "misty_step", "name": "Туманный шаг", "input": "214M", "type": "special",
+    "startup": 6, "active": 1, "recovery": 14,
+    "cost": { "slots": 1 },
+    "effects": [
+      { "type": "invulnerable", "frame": 1, "frames": 16 },
+      { "type": "teleport", "frame": 7, "x": 100 }
+    ]
+  },
+  {
+    // Если всё-таки подошли вплотную — «отстань от меня».
+    "id": "thunderwave", "name": "Волна грома", "input": "623H", "type": "special",
+    "startup": 6, "active": 6, "recovery": 28,
+    "cost": { "slots": 1 },
+    "hitboxes": [ { "x": -26, "y": -58, "w": 56, "h": 56 } ],
+    "hit": { "damage": 90, "chip": 12, "hitstun": 20, "blockstun": 14, "hitstop": 10, "launch": { "x": 5, "y": -5 } },
+    "effects": [ { "type": "invulnerable", "frame": 1, "frames": 10 } ]
+  }
+]

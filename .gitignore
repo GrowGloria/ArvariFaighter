@@ -1,0 +1,48 @@
+# ── Результаты сборки .NET ──
+[Bb]in/
+[Oo]bj/
+[Oo]ut/
+[Pp]ublish/
+artifacts/
+*.nupkg
+
+# ── Visual Studio ──
+.vs/
+*.user
+*.suo
+*.userprefs
+*.rsuser
+*.sln.docstates
+
+# ── JetBrains Rider ──
+.idea/
+*.sln.iml
+
+# ── VS Code (общие настройки проекта можно хранить, личные — нет) ──
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+# ── Claude Code: личные настройки ──
+.claude/settings.local.json
+
+# ── MonoGame Content Pipeline (если появится) ──
+Content/bin/
+Content/obj/
+*.mgcontent
+
+# ── Логи, отчёты, временные файлы ──
+*.log
+selftest.log
+TestResults/
+*.tmp
+*.swp
+
+# ── Файлы ОС ──
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+.DS_Store

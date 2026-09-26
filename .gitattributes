@@ -1,0 +1,11 @@
+# Текстовые файлы хранятся с LF, на Windows при checkout получают CRLF.
+* text=auto
+
+# Бинарные файлы — не трогать.
+*.png binary
+*.jpg binary
+*.gif binary
+*.wav binary
+*.ogg binary
+*.mp3 binary
+*.ttf binary

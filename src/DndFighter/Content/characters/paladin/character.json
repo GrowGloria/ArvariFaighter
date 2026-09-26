@@ -1,0 +1,65 @@
+{
+  "id": "paladin",
+  "name": "Торин",
+  "title": "Паладин клятвы преданности",
+
+  "stats": {
+    "health": 1050,
+    "walkSpeed": 1.5,
+    "backWalkSpeed": 1.15,
+    "jumpVelocity": 6.4,
+    "jumpSpeedX": 2.1,
+    "gravity": 0.33
+  },
+
+  // Паладин тратит ячейки на Божественную кару и Возложение рук.
+  // Ячейки копятся в бою: за попадания, за блок и за полученный урон.
+  "resources": [
+    {
+      "id": "slots", "name": "ЯЧЕЙКИ", "max": 2, "start": 1,
+      "regenPerSecond": 0.03, "gainOnHit": 0.08, "gainOnBlocked": 0.03, "gainOnDamaged": 0.05,
+      "display": "pips", "color": "#ffd24a"
+    }
+  ],
+
+  "sheets": {
+    "body": { "file": "sprites.png", "frameWidth": 64, "frameHeight": 64, "originX": 32, "originY": 60 }
+  },
+
+  "animations": {
+    "idle":         { "row": 0, "frames": 4, "frameTime": 10 },
+    "walk":         { "row": 1, "frames": 6, "frameTime": 7 },
+    "crouch":       { "row": 2 },
+    "jump":         { "row": 3, "frames": 3 },
+    "hit":          { "row": 4, "frames": 2, "frameTime": 5, "loop": false },
+    "block":        { "row": 5 },
+    "crouch_block": { "row": 6 },
+    "air_hit":      { "row": 7, "frames": 2, "frameTime": 8 },
+    "knockdown":    { "row": 8, "frames": 2, "frameTime": 6, "loop": false },
+    "getup":        { "row": 9, "frames": 3, "frameTime": 0 },
+    "victory":      { "row": 10, "frames": 2, "frameTime": 20 },
+
+    "5L":    { "row": 11, "frames": 3, "hitFrame": 1 },
+    "5M":    { "row": 12, "frames": 4, "hitFrame": 1 },
+    "5H":    { "row": 13, "frames": 5, "hitFrame": 2 },
+    "2L":    { "row": 14, "frames": 3, "hitFrame": 1 },
+    "2M":    { "row": 15, "frames": 4, "hitFrame": 1 },
+    "2H":    { "row": 16, "frames": 5, "hitFrame": 1 },
+    "jL":    { "row": 17, "frames": 2, "hitFrame": 1 },
+    "jM":    { "row": 18, "frames": 3, "hitFrame": 1 },
+    "jH":    { "row": 19, "frames": 3, "hitFrame": 1 },
+    "throw": { "row": 20, "frames": 4, "hitFrame": 1 },
+
+    "shield_bash":  { "row": 21, "frames": 5, "hitFrame": 1 },
+    "smite":        { "row": 22, "frames": 5, "hitFrame": 2 },
+    "lay_on_hands": { "row": 23, "frames": 5, "hitFrame": 2 },
+    "uprising":     { "row": 24, "frames": 5, "hitFrame": 2 }
+  },
+
+  "hurtboxes": {
+    "stand":  [ { "x": -7, "y": -51, "w": 16, "h": 22 }, { "x": -9, "y": -30, "w": 20, "h": 30 } ],
+    "crouch": [ { "x": -9, "y": -38, "w": 22, "h": 38 } ],
+    "air":    [ { "x": -9, "y": -46, "w": 18, "h": 42 } ]
+  },
+  "pushbox": { "x": -9, "y": -46, "w": 18, "h": 46 }
+}

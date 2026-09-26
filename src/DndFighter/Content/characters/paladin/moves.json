@@ -1,0 +1,112 @@
+[
+  // ───────── Обычные удары ─────────
+  {
+    "id": "5L", "name": "Удар рукоятью", "input": "5L",
+    "startup": 4, "active": 3, "recovery": 7,
+    "hitboxes": [ { "x": 6, "y": -40, "w": 22, "h": 12 } ],
+    "hit": { "damage": 30, "hitstun": 13, "blockstun": 9, "hitstop": 6, "pushback": 2.5 },
+    "cancels": [ "5M", "2M", "special" ]
+  },
+  {
+    "id": "5M", "name": "Рубящий удар", "input": "5M",
+    "startup": 7, "active": 3, "recovery": 13,
+    "hitboxes": [ { "x": 10, "y": -44, "w": 30, "h": 16 } ],
+    "hit": { "damage": 55, "hitstun": 16, "blockstun": 11, "hitstop": 8, "pushback": 3 },
+    "cancels": [ "5H", "2H", "special" ]
+  },
+  {
+    "id": "5H", "name": "Сокрушающий замах", "input": "5H",
+    "startup": 11, "active": 4, "recovery": 20,
+    "hitboxes": [ { "x": 8, "y": -56, "w": 36, "h": 42 } ],
+    "hit": { "damage": 90, "hitstun": 20, "blockstun": 14, "hitstop": 11, "pushback": 4 },
+    "cancels": [ "special" ]
+  },
+  {
+    "id": "2L", "name": "Низкий тычок", "input": "2L",
+    "startup": 4, "active": 2, "recovery": 8,
+    "hitboxes": [ { "x": 6, "y": -30, "w": 24, "h": 10 } ],
+    "hit": { "damage": 25, "hitstun": 12, "blockstun": 8, "hitstop": 6, "pushback": 2.5, "height": "low" },
+    "cancels": [ "5M", "2M", "special" ]
+  },
+  {
+    "id": "2M", "name": "Выпад из приседа", "input": "2M",
+    "startup": 7, "active": 3, "recovery": 14,
+    "hitboxes": [ { "x": 10, "y": -28, "w": 32, "h": 10 } ],
+    "hit": { "damage": 50, "hitstun": 16, "blockstun": 10, "hitstop": 8, "pushback": 3 },
+    "cancels": [ "2H", "special" ]
+  },
+  {
+    "id": "2H", "name": "Подсечка", "input": "2H",
+    "startup": 10, "active": 4, "recovery": 24,
+    "hitboxes": [ { "x": 6, "y": -12, "w": 36, "h": 12 } ],
+    "hit": { "damage": 80, "hitstun": 20, "blockstun": 12, "hitstop": 9, "pushback": 3, "height": "low", "knockdown": true },
+    "cancels": [ "special" ]
+  },
+
+  // ───────── В прыжке (оверхеды — блокируются только стоя) ─────────
+  {
+    "id": "jL", "name": "Удар коленом", "input": "j.L",
+    "startup": 5, "active": 7, "recovery": 6,
+    "hitboxes": [ { "x": 2, "y": -28, "w": 18, "h": 16 } ],
+    "hit": { "damage": 35, "hitstun": 14, "blockstun": 10, "hitstop": 6, "pushback": 2, "height": "overhead" }
+  },
+  {
+    "id": "jM", "name": "Рубящий в прыжке", "input": "j.M",
+    "startup": 7, "active": 5, "recovery": 8,
+    "hitboxes": [ { "x": 6, "y": -38, "w": 28, "h": 24 } ],
+    "hit": { "damage": 55, "hitstun": 16, "blockstun": 11, "hitstop": 8, "pushback": 2.5, "height": "overhead" }
+  },
+  {
+    "id": "jH", "name": "Падающий клинок", "input": "j.H",
+    "startup": 9, "active": 5, "recovery": 10,
+    "hitboxes": [ { "x": 4, "y": -44, "w": 32, "h": 42 } ],
+    "hit": { "damage": 80, "hitstun": 19, "blockstun": 13, "hitstop": 10, "pushback": 3, "height": "overhead" }
+  },
+
+  // ───────── Бросок ─────────
+  {
+    "id": "throw", "name": "Бросок через щит", "input": "LM",
+    "startup": 3, "active": 2, "recovery": 22,
+    "throwRange": 38,
+    "hit": { "damage": 110, "hitstop": 10, "launch": { "x": 3.5, "y": -4 } }
+  },
+
+  // ───────── Спецприёмы ─────────
+  {
+    "id": "shield_bash", "name": "Натиск щитом", "input": "236L", "type": "special",
+    "startup": 12, "active": 5, "recovery": 18,
+    "hitboxes": [ { "x": 4, "y": -44, "w": 22, "h": 36 } ],
+    "hit": { "damage": 70, "chip": 6, "hitstun": 18, "blockstun": 12, "hitstop": 9, "pushback": 5 },
+    "effects": [ { "type": "impulse", "frame": 9, "x": 5 } ]
+  },
+  {
+    "id": "smite", "name": "Божественная кара", "input": "236H", "type": "special",
+    "startup": 14, "active": 4, "recovery": 24,
+    "cost": { "slots": 1 },
+    "hitboxes": [ { "x": 6, "y": -56, "w": 40, "h": 50 } ],
+    "hit": {
+      "damage": 170, "chip": 25, "hitstun": 24, "blockstun": 16, "hitstop": 14, "pushback": 5,
+      "knockdown": true, "launch": { "x": 3, "y": -5 }
+    },
+    "effects": [
+      { "type": "impulse", "frame": 10, "x": 4 },
+      { "type": "popup", "frame": 14, "text": "КАРА!", "color": "#ffd24a" }
+    ]
+  },
+  {
+    "id": "lay_on_hands", "name": "Возложение рук", "input": "214M", "type": "special",
+    "startup": 18, "active": 1, "recovery": 24,
+    "cost": { "slots": 1 },
+    "effects": [ { "type": "heal", "frame": 19, "amount": 150 } ]
+  },
+  {
+    "id": "uprising", "name": "Восходящий удар", "input": "623H", "type": "special",
+    "startup": 5, "active": 8, "recovery": 26,
+    "hitboxes": [ { "x": 0, "y": -66, "w": 28, "h": 62 } ],
+    "hit": { "damage": 110, "chip": 10, "hitstun": 20, "blockstun": 14, "hitstop": 10, "launch": { "x": 1.5, "y": -6.5 } },
+    "effects": [
+      { "type": "invulnerable", "frame": 1, "frames": 8 },
+      { "type": "impulse", "frame": 5, "x": 1.5, "y": -6 }
+    ]
+  }
+]
