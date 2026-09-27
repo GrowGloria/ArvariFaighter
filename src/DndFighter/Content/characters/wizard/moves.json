@@ -3,28 +3,32 @@
   {
     "id": "5L", "name": "Тычок посохом", "input": "5L",
     "startup": 5, "active": 3, "recovery": 9,
-    "hitboxes": [ { "x": 8, "y": -40, "w": 28, "h": 10 } ],
+    "hitboxes": [ { "x": 14, "y": -41, "w": 28, "h": 10 } ],
+    "hurtboxes": [ { "x": 6, "y": -39, "w": 14, "h": 8 } ],
     "hit": { "damage": 25, "hitstun": 12, "blockstun": 8, "hitstop": 6, "pushback": 3 },
     "cancels": [ "5M", "2M", "special" ]
   },
   {
     "id": "5M", "name": "Дальний взмах", "input": "5M",
     "startup": 9, "active": 3, "recovery": 15,
-    "hitboxes": [ { "x": 12, "y": -46, "w": 38, "h": 18 } ],
+    "hitboxes": [ { "x": 14, "y": -46, "w": 30, "h": 16 } ],
+    "hurtboxes": [ { "x": 6, "y": -39, "w": 14, "h": 8 } ],
     "hit": { "damage": 50, "hitstun": 15, "blockstun": 10, "hitstop": 8, "pushback": 4 },
     "cancels": [ "special" ]
   },
   {
     "id": "5H", "name": "Отталкивающий удар", "input": "5H",
     "startup": 13, "active": 4, "recovery": 22,
-    "hitboxes": [ { "x": 12, "y": -54, "w": 44, "h": 34 } ],
+    "hitboxes": [ { "x": 14, "y": -46, "w": 32, "h": 18 } ],
+    "hurtboxes": [ { "x": 8, "y": -41, "w": 16, "h": 10 } ],
     "hit": { "damage": 75, "hitstun": 19, "blockstun": 13, "hitstop": 10, "pushback": 6.5 },
     "cancels": [ "special" ]
   },
   {
     "id": "2L", "name": "Низкий тычок", "input": "2L",
     "startup": 5, "active": 2, "recovery": 9,
-    "hitboxes": [ { "x": 6, "y": -28, "w": 28, "h": 10 } ],
+    "hitboxes": [ { "x": 14, "y": -31, "w": 30, "h": 9 } ],
+    "hurtboxes": [ { "x": 10, "y": -30, "w": 12, "h": 7 } ],
     "hit": { "damage": 22, "hitstun": 12, "blockstun": 8, "hitstop": 6, "pushback": 3, "height": "low" },
     "cancels": [ "2M", "special" ]
   },
@@ -32,14 +36,16 @@
     // Главный «тычок» зонера: самый длинный удар, отменяется в заговор.
     "id": "2M", "name": "Длинный выпад", "input": "2M",
     "startup": 9, "active": 3, "recovery": 16,
-    "hitboxes": [ { "x": 12, "y": -26, "w": 46, "h": 10 } ],
+    "hitboxes": [ { "x": 16, "y": -32, "w": 30, "h": 9 } ],
+    "hurtboxes": [ { "x": 10, "y": -30, "w": 14, "h": 7 } ],
     "hit": { "damage": 45, "hitstun": 15, "blockstun": 10, "hitstop": 8, "pushback": 4 },
     "cancels": [ "special" ]
   },
   {
     "id": "2H", "name": "Подсечка посохом", "input": "2H",
     "startup": 12, "active": 3, "recovery": 25,
-    "hitboxes": [ { "x": 8, "y": -12, "w": 44, "h": 12 } ],
+    "hitboxes": [ { "x": 6, "y": -20, "w": 32, "h": 20 } ],
+    "hurtboxes": [ { "x": 8, "y": -18, "w": 16, "h": 8 } ],
     "hit": { "damage": 70, "hitstun": 20, "blockstun": 12, "hitstop": 9, "pushback": 4, "height": "low", "knockdown": true },
     "cancels": [ "special" ]
   },
@@ -48,19 +54,19 @@
   {
     "id": "jL", "name": "Удар коленом", "input": "j.L",
     "startup": 5, "active": 6, "recovery": 6,
-    "hitboxes": [ { "x": 2, "y": -28, "w": 18, "h": 16 } ],
+    "hitboxes": [ { "x": 6, "y": -26, "w": 16, "h": 16 } ],
     "hit": { "damage": 30, "hitstun": 13, "blockstun": 9, "hitstop": 6, "pushback": 2, "height": "overhead" }
   },
   {
     "id": "jM", "name": "Посох сверху", "input": "j.M",
     "startup": 7, "active": 5, "recovery": 8,
-    "hitboxes": [ { "x": 6, "y": -38, "w": 32, "h": 24 } ],
+    "hitboxes": [ { "x": 12, "y": -40, "w": 26, "h": 26 } ],
     "hit": { "damage": 45, "hitstun": 15, "blockstun": 10, "hitstop": 8, "pushback": 2.5, "height": "overhead" }
   },
   {
     "id": "jH", "name": "Нисходящий посох", "input": "j.H",
     "startup": 10, "active": 5, "recovery": 10,
-    "hitboxes": [ { "x": 4, "y": -44, "w": 38, "h": 42 } ],
+    "hitboxes": [ { "x": 12, "y": -42, "w": 24, "h": 36 } ],
     "hit": { "damage": 65, "hitstun": 18, "blockstun": 12, "hitstop": 10, "pushback": 3, "height": "overhead" }
   },
 
@@ -179,7 +185,7 @@
     "id": "thunderwave", "name": "Волна грома", "input": "623H", "type": "special",
     "startup": 6, "active": 6, "recovery": 28,
     "cost": { "slots": 1 },
-    "hitboxes": [ { "x": -26, "y": -58, "w": 56, "h": 56 } ],
+    "hitboxes": [ { "x": -24, "y": -56, "w": 48, "h": 50 } ],
     "hit": { "damage": 90, "chip": 12, "hitstun": 20, "blockstun": 14, "hitstop": 10, "launch": { "x": 5, "y": -5 } },
     "effects": [ { "type": "invulnerable", "frame": 1, "frames": 10 } ]
   }

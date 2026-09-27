@@ -28,6 +28,9 @@ public sealed class MoveDef
     public int Recovery { get; set; } = 10;
 
     public List<BoxDef> Hitboxes { get; set; } = new();
+    /// <summary>Дополнительные уязвимые зоны во время приёма (вытянутая рука, выставленная нога).
+    /// По умолчанию действуют с первого активного кадра до конца приёма (можно задать start/end).</summary>
+    public List<BoxDef> Hurtboxes { get; set; } = new();
     public HitDef Hit { get; set; } = new();
 
     /// <summary>Для бросков: дальность захвата от центра бойца.</summary>

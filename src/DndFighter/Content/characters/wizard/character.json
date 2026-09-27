@@ -17,12 +17,12 @@
   // Заговоры (огненный снаряд, луч холода) бесплатны. Ячейки — на сильные заклинания и телепорты.
   // Плюс уникальная механика из C#: «Магическое восстановление» (см. ArcaneRecoveryBehavior.cs).
   "resources": [
-    { "id": "slots", "name": "ЯЧЕЙКИ", "max": 3, "start": 3, "regenPerSecond": 0.08, "display": "pips", "color": "#8a9bff" }
+    { "id": "slots", "name": "ЯЧЕЙКИ ЗАКЛИНАНИЙ", "max": 3, "start": 3, "regenPerSecond": 0.08, "display": "pips", "color": "#8a9bff" }
   ],
   "behavior": "arcane_recovery",
 
   "sheets": {
-    "body":   { "file": "sprites.png", "frameWidth": 64, "frameHeight": 64, "originX": 32, "originY": 60 },
+    "body":   { "file": "sprites.png", "frameWidth": 96, "frameHeight": 80, "originX": 32, "originY": 76 },
     "fx":     { "file": "fx.png",      "frameWidth": 16, "frameHeight": 16, "originX": 8,  "originY": 8 },
     "fx_big": { "file": "fx_big.png",  "frameWidth": 32, "frameHeight": 32, "originX": 16, "originY": 16 }
   },
@@ -64,10 +64,12 @@
     "daggers":  { "sheet": "fx_big", "row": 0, "frames": 4, "frameTime": 5 }
   },
 
+  // Хёртбоксы по замерам спрайтов (tools/SpriteGen/metrics_wizard.txt).
+  // Шляпа выше головы не считается уязвимой — как волосы/причёски в классических файтингах.
   "hurtboxes": {
-    "stand":  [ { "x": -7, "y": -52, "w": 16, "h": 22 }, { "x": -9, "y": -30, "w": 19, "h": 30 } ],
-    "crouch": [ { "x": -9, "y": -38, "w": 21, "h": 38 } ],
-    "air":    [ { "x": -9, "y": -46, "w": 18, "h": 42 } ]
+    "stand":  [ { "x": -6, "y": -50, "w": 15, "h": 22 }, { "x": -8, "y": -28, "w": 18, "h": 28 } ],
+    "crouch": [ { "x": -8, "y": -41, "w": 21, "h": 41 } ],
+    "air":    [ { "x": -8, "y": -48, "w": 19, "h": 46 } ]
   },
-  "pushbox": { "x": -9, "y": -46, "w": 18, "h": 46 }
+  "pushbox": { "x": -8, "y": -44, "w": 17, "h": 44 }
 }

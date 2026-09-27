@@ -50,6 +50,8 @@ public sealed class Fighter
     public bool MoveContact;
     public readonly HashSet<int> HitGroups = new();
     private MoveDef? _queuedCancel;
+    private MoveDef? _unaffordable;
+    private long _lastNoResourcePopup = -1000;
 
     public float Health;
     public float DisplayedHealth; // для «красного следа» урона на HUD
@@ -135,6 +137,7 @@ public sealed class Fighter
             {
                 _queuedCancel = FindMove(world, CanCancelInto);
                 if (_queuedCancel != null) Input.Consume();
+                else ReportUnaffordable(world);
             }
             return;
         }
@@ -294,9 +297,22 @@ public sealed class Fighter
     private bool TryStartMove(FightWorld world, Func<MoveDef, bool>? filter)
     {
         var m = FindMove(world, filter);
+        ReportUnaffordable(world);
         if (m == null) return false;
         StartMove(m, world);
         return true;
+    }
+
+    /// <summary>Команду ввели, но не хватило ресурса — показываем подсказку (не чаще раза в полсекунды).</summary>
+    private void ReportUnaffordable(FightWorld world)
+    {
+        if (_unaffordable is not { } m) return;
+        _unaffordable = null;
+        if (world.Tick - _lastNoResourcePopup < 30) return;
+        _lastNoResourcePopup = world.Tick;
+        var missing = m.Cost.FirstOrDefault(c => GetResource(c.Key) < c.Value - 0.0001f).Key;
+        var name = Def.Resources.FirstOrDefault(r => r.Id == missing)?.Name ?? missing;
+        world.AddPopup($"НЕ ХВАТАЕТ: {name}", Pos + new Vector2(0, -64), new Color(255, 120, 120));
     }
 
     /// <summary>Первый по приоритету приём, чья команда введена и который сейчас доступен.</summary>
@@ -308,7 +324,7 @@ public sealed class Fighter
             if (m.Command.Air != inAir) continue;
             if (filter != null && !filter(m)) continue;
             if (!Input.Matches(m.Command, Facing)) continue;
-            if (!CanAfford(m)) continue;
+            if (!CanAfford(m)) { _unaffordable ??= m; continue; }
             if (Behavior != null && !Behavior.CanUseMove(m)) continue;
             if (!m.Effects.All(e => EffectRegistry.Get(e.Type).CanStart(this, e, world))) continue;
             return m;
@@ -370,6 +386,13 @@ public sealed class Fighter
     {
         if (State is FighterState.Knockdown or FighterState.GetUp or FighterState.KO) yield break;
         foreach (var b in Def.GetHurtboxes(Stance)) yield return ToWorld(b);
+        if (!IsAttacking) yield break;
+        foreach (var b in Move!.Hurtboxes)
+        {
+            int start = b.Start > 0 ? b.Start : Move.Startup + 1;
+            int end = b.End > 0 ? b.End : Move.TotalFrames;
+            if (MoveFrame >= start && MoveFrame <= end) yield return ToWorld(b);
+        }
     }
 
     public RectangleF Pushbox => ToWorld(Def.Pushbox);

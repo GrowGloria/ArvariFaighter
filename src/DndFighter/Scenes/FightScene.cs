@@ -12,7 +12,14 @@ namespace DndFighter.Scenes;
 /// <summary>Бой: раунды, таймер, HUD. В режиме тренировки — манекен, хитбоксы и фреймдата.</summary>
 public sealed class FightScene : Scene
 {
-    private enum Phase { Intro, Fight, RoundOver, MatchOver, Paused }
+    private enum Phase
+    {
+        Intro, 
+        Fight, 
+        RoundOver, 
+        MatchOver, 
+        Paused
+    }
 
     public const int RoundsToWin = 2;
     public const int RoundSeconds = 99;
@@ -177,8 +184,11 @@ public sealed class FightScene : Scene
     {
         if (_wins[0] >= RoundsToWin || _wins[1] >= RoundsToWin)
         {
-            _banner = _wins[0] == _wins[1] ? "НИЧЬЯ"
-                : $"ПОБЕДА: {(_wins[0] > _wins[1] ? _def1.Name : _def2.Name)}";
+            _banner = _wins[0] == _wins[1] 
+                ? "НИЧЬЯ"
+                : $"ПОБЕДА: {(_wins[0] > _wins[1] 
+                    ? _def1.Name 
+                    : _def2.Name)}";
             SetPhase(Phase.MatchOver);
         }
         else StartRound(_round + 1);
@@ -197,8 +207,11 @@ public sealed class FightScene : Scene
         _banner = "";
 
         // Здоровье и ресурсы восстанавливаются, когда оба бойца спокойны.
-        bool calm = _world.Fighters.All(f => f.State is FighterState.Idle or FighterState.Walk or FighterState.Crouch);
-        _idleTicks = calm ? _idleTicks + 1 : 0;
+        bool calm = _world.Fighters
+            .All(f => f.State is FighterState.Idle or FighterState.Walk or FighterState.Crouch);
+        _idleTicks = calm 
+            ? _idleTicks + 1 
+            : 0;
         foreach (var f in _world.Fighters)
         {
             if (f.IsKo && f.State == FighterState.KO) { f.IsKo = false; f.SetState(FighterState.GetUp); }
@@ -257,13 +270,22 @@ public sealed class FightScene : Scene
 
     private void OnMoveStarted(Fighter f, MoveDef m)
     {
-        if (f.Index != 0) return;
-        _lastMoveInfo = $"{m.Name} ({m.Input})  СТАРТ {m.Startup}  АКТИВ {m.Active}  ВОССТ {m.Recovery}";
+        if (f.Index != 0)
+        {
+            return;
+        }
+        
+        string cost = string.Concat(m.Cost.Select(c => $"  ЦЕНА {c.Value:0.#}"));
+        _lastMoveInfo = $"{m.Name} ({m.Input})  СТАРТ {m.Startup}  АКТИВ {m.Active}  ВОССТ {m.Recovery}{cost}";
     }
 
     private void OnHit(HitReport r)
     {
-        if (r.Attacker.Index != 0) return;
+        if (r.Attacker.Index != 0)
+        {
+            return;
+        }
+        
         string adv = r.Advantage is int a ? (a >= 0 ? $"+{a}" : a.ToString()) : "НОКДАУН";
         _lastHitInfo = $"{(r.Blocked ? "БЛОК" : "ПОПАДАНИЕ")}  УРОН {r.Damage}  ПРЕИМУЩЕСТВО {adv}";
     }
@@ -278,7 +300,14 @@ public sealed class FightScene : Scene
         if (_banner.Length > 0) d.TextCentered(_banner, 240, 100, new Color(255, 220, 90), 4);
 
         if (_phase == Phase.MatchOver && _phaseTime > 60)
-            d.TextCentered("L: РЕВАНШ   M: ВЫБОР БОЙЦОВ", 240, 140, Color.White);
+        {
+            // Реальные клавиши из controls.json, а не названия игровых кнопок L/M.
+            var (k1, k2) = (Game.Controls.P1, Game.Controls.P2);
+            string rematch = $"{SelectScene.KeyName(k1.L)}, {SelectScene.KeyName(k2.L)} ИЛИ ENTER - РЕВАНШ";
+            string select = $"{SelectScene.KeyName(k1.M)} ИЛИ {SelectScene.KeyName(k2.M)} - ВЫБОР БОЙЦОВ";
+            d.TextCentered(rematch, 240, 140, Color.White);
+            d.TextCentered(select, 240, 152, Color.White);
+        }
 
         if (Training) DrawTrainingInfo(d);
         if (_phase == Phase.Paused) DrawPause(d);
