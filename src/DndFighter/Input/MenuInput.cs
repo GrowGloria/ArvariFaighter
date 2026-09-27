@@ -33,8 +33,15 @@ public sealed class MenuInput
             MenuAction.Confirm => b.L,
             _ => b.M,
         };
-        if (KeyPressed(key)) return true;
-        if (player != 0) return false;
+        if (KeyPressed(key))
+        {
+            return true;
+        }
+        if (player != 0)
+        {
+            return false;
+        }
+        
         return action switch
         {
             MenuAction.Confirm => KeyPressed(Keys.Enter),

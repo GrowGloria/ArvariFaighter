@@ -81,8 +81,30 @@ public sealed class FighterGame : Game
 
     public void ChangeScene(Scene scene) => _nextScene = scene;
 
+    [System.Runtime.InteropServices.DllImport("user32.dll", CharSet = System.Runtime.InteropServices.CharSet.Unicode)]
+    private static extern bool SetWindowTextW(IntPtr hWnd, string text);
+
+    [System.Runtime.InteropServices.DllImport("user32.dll", CharSet = System.Runtime.InteropServices.CharSet.Unicode)]
+    private static extern int GetWindowTextW(IntPtr hWnd, System.Text.StringBuilder text, int maxCount);
+
+    private bool _titleFixed;
+    private int _titleAttempts;
+
+    /// <summary>MonoGame (SDL) на Windows портит кириллицу в заголовке окна («?????»),
+    /// поэтому после создания окна выставляем заголовок напрямую через Unicode-API Windows.</summary>
+    private void FixWindowTitle()
+    {
+        _titleFixed = true;
+        if (!OperatingSystem.IsWindows()) return;
+        var hwnd = System.Diagnostics.Process.GetCurrentProcess().MainWindowHandle;
+        if (hwnd == IntPtr.Zero) { _titleFixed = ++_titleAttempts > 120; return; }
+        SetWindowTextW(hwnd, Title);
+    }
+
     protected override void Update(GameTime gameTime)
     {
+        if (!_titleFixed) FixWindowTitle();
+
         if (_nextScene != null)
         {
             _scene = _nextScene;
@@ -120,6 +142,13 @@ public sealed class FighterGame : Game
         if (ScreenshotPath != null && ++_ticks >= ScreenshotTick)
         {
             using (var fs = File.Create(ScreenshotPath)) _screen.SaveAsPng(fs, VirtualWidth, VirtualHeight);
+            if (OperatingSystem.IsWindows())
+            {
+                // Для проверки: какой заголовок окна реально видит Windows.
+                var buf = new System.Text.StringBuilder(256);
+                GetWindowTextW(System.Diagnostics.Process.GetCurrentProcess().MainWindowHandle, buf, buf.Capacity);
+                File.WriteAllText(ScreenshotPath + ".title.txt", buf.ToString());
+            }
             ScreenshotPath = null;
             Exit();
         }
