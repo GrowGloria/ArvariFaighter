@@ -2,6 +2,7 @@
   // ───────── Обычные удары ─────────
   {
     "id": "5L", "name": "Удар рукоятью", "input": "5L",
+    "description": "Быстрый удар рукоятью меча. Начинает комбо: отменяется в 5M, 2M и спецприёмы.",
     "startup": 4, "active": 3, "recovery": 7,
     "hitboxes": [ { "x": 12, "y": -41, "w": 28, "h": 10 } ],
     "hurtboxes": [ { "x": 6, "y": -39, "w": 14, "h": 8 } ],
@@ -10,6 +11,7 @@
   },
   {
     "id": "5M", "name": "Рубящий удар", "input": "5M",
+    "description": "Рубящий удар мечом средней дальности. Отменяется в 5H, 2H и спецприёмы.",
     "startup": 7, "active": 3, "recovery": 13,
     "hitboxes": [ { "x": 14, "y": -46, "w": 28, "h": 16 } ],
     "hurtboxes": [ { "x": 6, "y": -39, "w": 14, "h": 8 } ],
@@ -18,6 +20,7 @@
   },
   {
     "id": "5H", "name": "Сокрушающий замах", "input": "5H",
+    "description": "Мощный замах сверху: медленный, но сильный. Отменяется в спецприём.",
     "startup": 11, "active": 4, "recovery": 20,
     "hitboxes": [ { "x": 14, "y": -48, "w": 30, "h": 26 } ],
     "hurtboxes": [ { "x": 8, "y": -41, "w": 16, "h": 10 } ],
@@ -26,6 +29,7 @@
   },
   {
     "id": "2L", "name": "Низкий тычок", "input": "2L",
+    "description": "Быстрый тычок по ногам. Бьёт низ: блокируется только сидя.",
     "startup": 4, "active": 2, "recovery": 8,
     "hitboxes": [ { "x": 14, "y": -31, "w": 28, "h": 9 } ],
     "hurtboxes": [ { "x": 10, "y": -30, "w": 12, "h": 7 } ],
@@ -34,6 +38,7 @@
   },
   {
     "id": "2M", "name": "Выпад из приседа", "input": "2M",
+    "description": "Выпад мечом из приседа. Отменяется в подсечку и спецприёмы.",
     "startup": 7, "active": 3, "recovery": 14,
     "hitboxes": [ { "x": 16, "y": -32, "w": 28, "h": 9 } ],
     "hurtboxes": [ { "x": 10, "y": -30, "w": 14, "h": 7 } ],
@@ -42,6 +47,7 @@
   },
   {
     "id": "2H", "name": "Подсечка", "input": "2H",
+    "description": "Подсечка: бьёт низ и сбивает с ног.",
     "startup": 10, "active": 4, "recovery": 24,
     "hitboxes": [ { "x": 6, "y": -18, "w": 28, "h": 18 } ],
     "hurtboxes": [ { "x": 8, "y": -18, "w": 16, "h": 8 } ],
@@ -52,18 +58,21 @@
   // ───────── В прыжке (оверхеды — блокируются только стоя) ─────────
   {
     "id": "jL", "name": "Удар коленом", "input": "j.L",
+    "description": "Удар коленом в прыжке. Быстрый, бьёт сверху: блокируется только стоя.",
     "startup": 5, "active": 7, "recovery": 6,
     "hitboxes": [ { "x": 6, "y": -26, "w": 16, "h": 16 } ],
     "hit": { "damage": 35, "hitstun": 14, "blockstun": 10, "hitstop": 6, "pushback": 2, "height": "overhead" }
   },
   {
     "id": "jM", "name": "Рубящий в прыжке", "input": "j.M",
+    "description": "Рубящий удар в прыжке. Бьёт сверху.",
     "startup": 7, "active": 5, "recovery": 8,
     "hitboxes": [ { "x": 12, "y": -36, "w": 24, "h": 22 } ],
     "hit": { "damage": 55, "hitstun": 16, "blockstun": 11, "hitstop": 8, "pushback": 2.5, "height": "overhead" }
   },
   {
     "id": "jH", "name": "Падающий клинок", "input": "j.H",
+    "description": "Мощный удар клинком в прыжке. Лучшее начало комбо после прыжка.",
     "startup": 9, "active": 5, "recovery": 10,
     "hitboxes": [ { "x": 10, "y": -40, "w": 24, "h": 34 } ],
     "hit": { "damage": 80, "hitstun": 19, "blockstun": 13, "hitstop": 10, "pushback": 3, "height": "overhead" }
@@ -72,6 +81,7 @@
   // ───────── Бросок ─────────
   {
     "id": "throw", "name": "Бросок через щит", "input": "LM",
+    "description": "Бросок вплотную, пробивает блок. Если противник тоже нажал бросок - будет тех.",
     "startup": 3, "active": 2, "recovery": 22,
     "throwRange": 38,
     "hit": { "damage": 110, "hitstop": 10, "launch": { "x": 3.5, "y": -4 } }
@@ -80,6 +90,7 @@
   // ───────── Спецприёмы ─────────
   {
     "id": "shield_bash", "name": "Натиск щитом", "input": "236L", "type": "special",
+    "description": "Рывок вперёд с ударом щитом. Бесплатный, быстро сокращает дистанцию.",
     "startup": 12, "active": 5, "recovery": 18,
     "hitboxes": [ { "x": 12, "y": -42, "w": 20, "h": 20 } ],
     "hit": { "damage": 70, "chip": 6, "hitstun": 18, "blockstun": 12, "hitstop": 9, "pushback": 5 },
@@ -87,6 +98,7 @@
   },
   {
     "id": "smite", "name": "Божественная кара", "input": "236H", "type": "special",
+    "description": "Самый сильный удар Торина: сияющий меч, 170 урона, сбивает с ног. Тратит 1 ячейку.",
     "startup": 14, "active": 4, "recovery": 24,
     "cost": { "slots": 1 },
     "hitboxes": [ { "x": 14, "y": -50, "w": 32, "h": 40 } ],
@@ -102,12 +114,14 @@
   },
   {
     "id": "lay_on_hands", "name": "Возложение рук", "input": "214M", "type": "special",
+    "description": "Лечит 150 здоровья. Долгий: делай на расстоянии или когда противник упал. 1 ячейка.",
     "startup": 18, "active": 1, "recovery": 24,
     "cost": { "slots": 1 },
     "effects": [ { "type": "heal", "frame": 19, "amount": 150 } ]
   },
   {
     "id": "uprising", "name": "Восходящий удар", "input": "623H", "type": "special",
+    "description": "Удар мечом в прыжке вверх. В начале неуязвим: сбивает прыгающих и перебивает атаки.",
     "startup": 5, "active": 8, "recovery": 26,
     "hitboxes": [ { "x": -6, "y": -76, "w": 32, "h": 44 } ],
     "hit": { "damage": 110, "chip": 10, "hitstun": 20, "blockstun": 14, "hitstop": 10, "launch": { "x": 1.5, "y": -6.5 } },

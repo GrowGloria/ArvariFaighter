@@ -66,6 +66,8 @@ public sealed class FighterGame : Game
         return StartScene switch
         {
             "select" => new SelectScene(this, GameMode.Versus),
+            "moves" => new MoveListScene(this, 0, new TitleScene(this)),
+            "moves2" => new MoveListScene(this, 1, new TitleScene(this)),
             "fight" => new FightScene(this, GameMode.Versus, roster[0], p2, Loader.Stages[0]),
             "training" => new FightScene(this, GameMode.Training, roster[0], p2, Loader.Stages[0]),
             _ => new TitleScene(this),
@@ -79,7 +81,12 @@ public sealed class FighterGame : Game
         _draw = new Draw(GraphicsDevice, _batch);
     }
 
-    public void ChangeScene(Scene scene) => _nextScene = scene;
+    private bool _nextSceneEnter = true;
+
+    public void ChangeScene(Scene scene) => (_nextScene, _nextSceneEnter) = (scene, true);
+
+    /// <summary>Вернуться на уже открытый экран, не запуская его заново (например, из списка приёмов в паузу боя).</summary>
+    public void ResumeScene(Scene scene) => (_nextScene, _nextSceneEnter) = (scene, false);
 
     [System.Runtime.InteropServices.DllImport("user32.dll", CharSet = System.Runtime.InteropServices.CharSet.Unicode)]
     private static extern bool SetWindowTextW(IntPtr hWnd, string text);
@@ -109,7 +116,7 @@ public sealed class FighterGame : Game
         {
             _scene = _nextScene;
             _nextScene = null;
-            _scene.Enter();
+            if (_nextSceneEnter) _scene.Enter();
         }
 
         Menu.Update();

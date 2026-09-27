@@ -16,6 +16,9 @@ public sealed class MoveDef
     public string Id { get; set; } = "";
     public string Name { get; set; } = "";
 
+    /// <summary>Короткое описание для страницы «Список приёмов».</summary>
+    public string Description { get; set; } = "";
+
     /// <summary>Команда в нумпад-нотации: "5L", "2M", "j.H", "236L", "623H", "LM".</summary>
     public string Input { get; set; } = "";
     public MoveType Type { get; set; } = MoveType.Normal;

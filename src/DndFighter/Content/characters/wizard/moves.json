@@ -2,6 +2,7 @@
   // ───────── Обычные удары: длинный посох, чтобы держать дистанцию ─────────
   {
     "id": "5L", "name": "Тычок посохом", "input": "5L",
+    "description": "Быстрый тычок посохом. Отменяется в 5M, 2M и заклинания.",
     "startup": 5, "active": 3, "recovery": 9,
     "hitboxes": [ { "x": 14, "y": -41, "w": 28, "h": 10 } ],
     "hurtboxes": [ { "x": 6, "y": -39, "w": 14, "h": 8 } ],
@@ -10,6 +11,7 @@
   },
   {
     "id": "5M", "name": "Дальний взмах", "input": "5M",
+    "description": "Дальний взмах посохом: держит противника на расстоянии. Отменяется в заклинания.",
     "startup": 9, "active": 3, "recovery": 15,
     "hitboxes": [ { "x": 14, "y": -46, "w": 30, "h": 16 } ],
     "hurtboxes": [ { "x": 6, "y": -39, "w": 14, "h": 8 } ],
@@ -18,6 +20,7 @@
   },
   {
     "id": "5H", "name": "Отталкивающий удар", "input": "5H",
+    "description": "Сильный удар навершием, далеко отталкивает противника.",
     "startup": 13, "active": 4, "recovery": 22,
     "hitboxes": [ { "x": 14, "y": -46, "w": 32, "h": 18 } ],
     "hurtboxes": [ { "x": 8, "y": -41, "w": 16, "h": 10 } ],
@@ -26,6 +29,7 @@
   },
   {
     "id": "2L", "name": "Низкий тычок", "input": "2L",
+    "description": "Быстрый тычок по ногам. Бьёт низ: блокируется только сидя.",
     "startup": 5, "active": 2, "recovery": 9,
     "hitboxes": [ { "x": 14, "y": -31, "w": 30, "h": 9 } ],
     "hurtboxes": [ { "x": 10, "y": -30, "w": 12, "h": 7 } ],
@@ -35,6 +39,7 @@
   {
     // Главный «тычок» зонера: самый длинный удар, отменяется в заговор.
     "id": "2M", "name": "Длинный выпад", "input": "2M",
+    "description": "Самый длинный удар Элары - главный способ не подпускать. Отменяется в заклинание.",
     "startup": 9, "active": 3, "recovery": 16,
     "hitboxes": [ { "x": 16, "y": -32, "w": 30, "h": 9 } ],
     "hurtboxes": [ { "x": 10, "y": -30, "w": 14, "h": 7 } ],
@@ -43,6 +48,7 @@
   },
   {
     "id": "2H", "name": "Подсечка посохом", "input": "2H",
+    "description": "Подсечка посохом: бьёт низ и сбивает с ног.",
     "startup": 12, "active": 3, "recovery": 25,
     "hitboxes": [ { "x": 6, "y": -20, "w": 32, "h": 20 } ],
     "hurtboxes": [ { "x": 8, "y": -18, "w": 16, "h": 8 } ],
@@ -53,18 +59,21 @@
   // ───────── В прыжке ─────────
   {
     "id": "jL", "name": "Удар коленом", "input": "j.L",
+    "description": "Удар коленом в прыжке. Бьёт сверху: блокируется только стоя.",
     "startup": 5, "active": 6, "recovery": 6,
     "hitboxes": [ { "x": 6, "y": -26, "w": 16, "h": 16 } ],
     "hit": { "damage": 30, "hitstun": 13, "blockstun": 9, "hitstop": 6, "pushback": 2, "height": "overhead" }
   },
   {
     "id": "jM", "name": "Посох сверху", "input": "j.M",
+    "description": "Удар посохом сверху в прыжке.",
     "startup": 7, "active": 5, "recovery": 8,
     "hitboxes": [ { "x": 12, "y": -40, "w": 26, "h": 26 } ],
     "hit": { "damage": 45, "hitstun": 15, "blockstun": 10, "hitstop": 8, "pushback": 2.5, "height": "overhead" }
   },
   {
     "id": "jH", "name": "Нисходящий посох", "input": "j.H",
+    "description": "Сильный удар посохом в прыжке, бьёт сверху.",
     "startup": 10, "active": 5, "recovery": 10,
     "hitboxes": [ { "x": 12, "y": -42, "w": 24, "h": 36 } ],
     "hit": { "damage": 65, "hitstun": 18, "blockstun": 12, "hitstop": 10, "pushback": 3, "height": "overhead" }
@@ -73,6 +82,7 @@
   // ───────── Бросок: отшвыривает далеко — снова дистанция ─────────
   {
     "id": "throw", "name": "Отталкивающий импульс", "input": "LM",
+    "description": "Магический толчок вплотную: пробивает блок и отбрасывает далеко.",
     "startup": 3, "active": 2, "recovery": 22,
     "throwRange": 36,
     "hit": { "damage": 80, "hitstop": 10, "launch": { "x": 5.5, "y": -4 } }
@@ -81,6 +91,7 @@
   // ───────── Заговоры (бесплатные, один на экране — общий id "cantrip") ─────────
   {
     "id": "fire_bolt", "name": "Огненный снаряд", "input": "236L", "type": "special",
+    "description": "Заговор: медленный огненный шар, бесплатный. Пока он летит, другой заговор не выйдет.",
     "animation": "cast_fire",
     "startup": 11, "active": 2, "recovery": 22,
     "effects": [
@@ -96,6 +107,7 @@
   {
     // Быстрый, но слабее: наказывает попытки подойти.
     "id": "ray_of_frost", "name": "Луч холода", "input": "236M", "type": "special",
+    "description": "Заговор: быстрый ледяной луч, надолго оглушает. Бесплатный.",
     "animation": "cast_fire",
     "startup": 9, "active": 2, "recovery": 24,
     "effects": [
@@ -111,6 +123,7 @@
   {
     // Из прыжка вниз-вперёд: против тех, кто подходит низом.
     "id": "air_fire_bolt", "name": "Огонь с высоты", "input": "j.236L", "type": "special",
+    "description": "Огненный шар из прыжка вниз-вперёд - против тех, кто подходит низом.",
     "animation": "cast_air",
     "startup": 8, "active": 2, "recovery": 12,
     "effects": [
@@ -128,6 +141,7 @@
   {
     // Три быстрых дротика.
     "id": "magic_missile", "name": "Волшебная стрела", "input": "236H", "type": "special",
+    "description": "Три быстрых дротика подряд. Тратит 1 ячейку.",
     "animation": "cast_missile",
     "startup": 12, "active": 5, "recovery": 26,
     "cost": { "slots": 1 },
@@ -146,6 +160,7 @@
   {
     // Висящая ловушка на расстоянии: бьёт несколько раз, перекрывает подход.
     "id": "cloud_of_daggers", "name": "Облако кинжалов", "input": "214H", "type": "special",
+    "description": "Облако клинков висит на расстоянии и бьёт до 4 раз, перекрывая подход. 1 ячейка.",
     "animation": "cast_cloud",
     "startup": 16, "active": 2, "recovery": 24,
     "cost": { "slots": 1 },
@@ -163,6 +178,7 @@
   {
     // Отступление: телепорт назад, неуязвима.
     "id": "misty_step_back", "name": "Туманный шаг назад", "input": "214L", "type": "special",
+    "description": "Неуязвимый телепорт назад - уйти от давления. 1 ячейка.",
     "animation": "misty_step",
     "startup": 6, "active": 1, "recovery": 12,
     "cost": { "slots": 1 },
@@ -173,6 +189,7 @@
   },
   {
     "id": "misty_step", "name": "Туманный шаг", "input": "214M", "type": "special",
+    "description": "Неуязвимый телепорт вперёд, за спину противнику. 1 ячейка.",
     "startup": 6, "active": 1, "recovery": 14,
     "cost": { "slots": 1 },
     "effects": [
@@ -183,6 +200,7 @@
   {
     // Если всё-таки подошли вплотную — «отстань от меня».
     "id": "thunderwave", "name": "Волна грома", "input": "623H", "type": "special",
+    "description": "Волна силы вокруг Элары отбрасывает того, кто подошёл вплотную. В начале неуязвима. 1 ячейка.",
     "startup": 6, "active": 6, "recovery": 28,
     "cost": { "slots": 1 },
     "hitboxes": [ { "x": -24, "y": -56, "w": 48, "h": 50 } ],
