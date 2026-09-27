@@ -54,6 +54,7 @@ public static class SelfTest
         var wiz = loader.Characters.FirstOrDefault(c => c.Id == "wizard");
         var stage = loader.Stages[0];
         if (pal != null && wiz != null) Scenarios(pal, wiz, stage);
+        MoveListChecks(loader);
 
         // Каждый персонаж: каждый приём можно выполнить и он завершается без исключений.
         foreach (var c in loader.Characters) EveryMove(c, loader.Characters[0], stage);
@@ -80,6 +81,44 @@ public static class SelfTest
     private static void Run(FightWorld w, int ticks)
     {
         for (int i = 0; i < ticks; i++) w.Update(true);
+    }
+
+    /// <summary>Страница «Список приёмов»: команды переводятся в стрелки и клавиши правильно, ни один приём не потерян.</summary>
+    private static void MoveListChecks(ContentLoader loader)
+    {
+        Write("\n── Список приёмов ──");
+        var keys = new KeyBindings(); // по умолчанию: J K L
+        foreach (var (input, expected) in new[]
+        {
+            ("5L", "J"), ("2M", "↓ + K"), ("6H", "→ + L"), ("j.H", "ПРЫЖОК: L"),
+            ("236L", "↓ ↘ → + J"), ("214M", "↓ ↙ ← + K"), ("623H", "→ ↓ ↘ + L"),
+            ("j.236L", "ПРЫЖОК: ↓ ↘ → + J"), ("LM", "J+K"),
+        })
+        {
+            var text = Scenes.MoveListScene.FormatCommand(MoveCommand.Parse(input), keys);
+            Check($"Команда {input} → {expected}", text == expected, $"получилось '{text}'");
+        }
+
+        foreach (var c in loader.Characters)
+        {
+            var missingDesc = c.Moves.Where(m => string.IsNullOrWhiteSpace(m.Description)).Select(m => m.Id).ToList();
+            Check($"{c.Id}: у всех приёмов есть описание для страницы", missingDesc.Count == 0,
+                $"без описания: {string.Join(", ", missingDesc)}");
+        }
+
+        var wiz = loader.Characters.FirstOrDefault(c => c.Id == "wizard");
+        if (wiz != null)
+        {
+            string Dmg(string id) => Scenes.MoveListScene.DamageText(wiz.Moves.First(m => m.Id == id));
+            Check("Урон на странице: снаряд, 3 дротика, удар", Dmg("fire_bolt") == "60" && Dmg("magic_missile") == "3X35" && Dmg("5L") == "25",
+                $"{Dmg("fire_bolt")} / {Dmg("magic_missile")} / {Dmg("5L")}");
+        }
+        var pal = loader.Characters.FirstOrDefault(c => c.Id == "paladin");
+        if (pal != null)
+        {
+            var heal = Scenes.MoveListScene.DamageText(pal.Moves.First(m => m.Id == "lay_on_hands"));
+            Check("Урон на странице: лечение показано как +150", heal == "+150", heal);
+        }
     }
 
     private static void Scenarios(CharacterDef pal, CharacterDef wiz, StageDef stage)

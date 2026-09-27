@@ -238,12 +238,17 @@ public sealed class FightScene : Scene
         switch (_pauseCursor)
         {
             case 0: _phase = _phaseBeforePause; break;
-            case 1: BackToSelect(); break;
+            case 1:
+                // Список приёмов первого игрока; по возвращении бой остаётся на паузе там же.
+                int index = Math.Max(0, Game.Loader.Characters.FindIndex(c => c.Id == _def1.Id));
+                Game.ChangeScene(new MoveListScene(Game, index, returnTo: this));
+                break;
+            case 2: BackToSelect(); break;
             default: Game.ChangeScene(new TitleScene(Game)); break;
         }
     }
 
-    private static string[] PauseItems() => new[] { "ПРОДОЛЖИТЬ", "ВЫБОР БОЙЦОВ", "ГЛАВНОЕ МЕНЮ" };
+    private static string[] PauseItems() => new[] { "ПРОДОЛЖИТЬ", "СПИСОК ПРИЁМОВ", "ВЫБОР БОЙЦОВ", "ГЛАВНОЕ МЕНЮ" };
 
     private void BackToSelect()
     {
@@ -275,7 +280,8 @@ public sealed class FightScene : Scene
         WorldRenderer.DrawWorld(d, _world, _showBoxes);
         Hud.Draw(d, _world, _wins, Training ? -1 : (_timerTicks + 59) / 60);
 
-        if (_banner.Length > 0) d.TextCentered(_banner, 240, 100, new Color(255, 220, 90), 4);
+        // Во время паузы большую надпись («БОЙ!», «НОКАУТ!») не рисуем — она наезжает на меню.
+        if (_banner.Length > 0 && _phase != Phase.Paused) d.TextCentered(_banner, 240, 100, new Color(255, 220, 90), 4);
 
         if (_phase == Phase.MatchOver && _phaseTime > 60)
             d.TextCentered("L: РЕВАНШ   M: ВЫБОР БОЙЦОВ", 240, 140, Color.White);
